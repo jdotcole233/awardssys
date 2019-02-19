@@ -1,6 +1,3 @@
-
-
-
 :- ensure_loaded('getyesno.pl').
 :- ensure_loaded('inference.pl').
 
@@ -11,7 +8,6 @@ startprogram :- reconsult('/Users/gh0stm0de/Desktop/aiCourseWork/studentkb.pl'),
                 write('Are you a Lancaster student? Answer with yes or nope, followed by full stop'),nl,
                 read(Answer),
                 answer(Answer).
-
 
 
 
@@ -72,33 +68,41 @@ runagain_student(_) :- write('sorry, you didnt give me the right answer'), nl,
                        runagain_student(yes).
 
 
+ runagain_student_two(yes) :- select_year(second_year, yes).
+ runagain_student_two(no) :- write('I hope i was helpful, come back soon! :) '), nl,
+                             write('Good bye!!!').
+
+ runagain_student_two(_) :- write('sorry, you didnt give me the right answer'), nl,
+                            runagain_student_two(yes).
+
 
 
 select_year(first_year, yes) :- write('What i will advice is that you start gaining more experience by engaging in extra curricular activities'), nl,
                           % Goals can be wanting to know about different awards, how to build points, how assessments are made.
                            ask_question(Question),nl,
                            get_yes_or_no(Result), nl,
-                           get_response(Question, Result), nl,
-                           write('do you want us to continue? yes or no: '), nl,
-                           get_yes_or_no(Tryagain), nl,
-                           runagain_student(Tryagain)
+                           get_response(Question, Result), nl.
+%                           write('do you want us to continue? yes or no: '), nl,
+%                           get_yes_or_no(Tryagain), nl,
+%                           runagain_student(Tryagain).
 
-select_year(first_year, no) :- fail.
+select_year(first_year, no) :- write('').
 
 select_year(second_year, yes) :- write('Have you done any of the following activities'), nl,
-                            ask_question(Question),nl,
+                            ask_question_advc(Question),nl,
                             get_yes_or_no(Result), nl,
                             get_response(Question, Result), nl.
 
-select_year(second_year, no) :- fail.
+
+select_year(second_year, no) :- write('').
 
 select_year(final_year, yes) :- write('Have you done any of the following activities'), nl,
-                           ask_question(Question),nl,
+                           ask_question_advc(Question),nl,
                            get_yes_or_no(Result), nl,
                            get_response(Question, Result), nl.
 
 
-select_year(final_year, no) :- fail.
+% select_year(final_year, no) :- write('').
 
 
 ask_question_study(first_year) :- write('Are you a first year student?'), nl.
@@ -113,10 +117,10 @@ ask_question(build_points) :- write('2. Do you want to know how to build up poin
 
 ask_question(assessments_made) :- write('3. Do you wish to know how you are assessed?').
 
-ask_question(had_work_experience) :-   write('1. Had a work experience'), nl.
+ask_question_advc(have_work_experience) :-   write('1. Had a work experience'), nl.
 
-ask_question(engaged_in_campus_activity) :- write('2. Engaged in any campus activity'), nl.
+ask_question_advc(engaged_in_campus_activity) :- write('2. Engaged in any campus activity'), nl.
 
-ask_question(volunteering_work) :- write('3. Volunteering'), nl.
+ask_question_advc(volunteering_work) :- write('3. Volunteering'), nl.
 
-ask_question(work_shop_works) :- write('4. Being to any of our workshops'), nl.
+ask_question_advc(work_shop_works) :- write('4. Being to any of our workshops'), nl.

@@ -14,7 +14,7 @@ get_yes_or_no(Result) :- get(Char),              % read a character
                          !.                      % cut -- see text
 
 get_yes_or_no(Result) :- nl,
-                         write('Type Y or N:'),
+                         write('Type Y or N (To continue to the next):'),
                          get_yes_or_no(Result).
 
 interpret(89,yes).  % ASCII 89  = 'Y'
