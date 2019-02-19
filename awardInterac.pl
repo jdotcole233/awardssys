@@ -2,6 +2,7 @@
 
 
 :- ensure_loaded('getyesno.pl').
+:- ensure_loaded('inference.pl').
 
 
 startprogram :- reconsult('/Users/gh0stm0de/Desktop/aiCourseWork/studentkb.pl'),
@@ -25,6 +26,9 @@ answer(nope) :- write('Lancaster offers amazing opportunities to its students'),
                 read(Tryagain),
                 rerun(Tryagain).
 
+answer(_) :- write('Wrong input encountered, Lets try this again'), nl, nl,
+             startprogram.
+
 
 rerun(yes) :- startprogram.
 
@@ -34,11 +38,10 @@ rerun(no) :- write('We hope to see you soon').
 student(Studentname) :-  lancaster_student(Studentname),
                          write('Welcome '),
                          write(Studentname),nl,nl,
-                         write('Select your year of study'),nl,
-                         write('first'),nl,
-                         write('second'),nl,
-                         write('final'),nl.
-                      %   read(Studentyear).
+                         write('Answer with yes (y) or no (n)'), nl,
+                         ask_question_study(Answer),nl,
+                         get_yes_or_no(Response),nl,
+                         select_year(Answer, Response),nl.
 
 
 
@@ -61,28 +64,46 @@ sayyesornoforregistered(yes) :- write('Tell me your name'), nl,
 
 sayyesornoforregistered(no) :-  answer(nope).
 
+runagain_student(yes) :- select_year(first_year, yes).
+runagain_student(no) :- write('I hope i was helpful, come back soon! :) '), nl,
+                        write('Good bye!!!').
 
-select_year(first_year) :- write('What i will advice is that you start gaining more experience by partaking extra curricular activities'), nl,
+runagain_student(_) :- write('sorry, you didnt give me the right answer'), nl,
+                       runagain_student(yes).
+
+
+
+
+select_year(first_year, yes) :- write('What i will advice is that you start gaining more experience by engaging in extra curricular activities'), nl,
                           % Goals can be wanting to know about different awards, how to build points, how assessments are made.
                            ask_question(Question),nl,
                            get_yes_or_no(Result), nl,
-                           get_response(Question, Result), nl.
+                           get_response(Question, Result), nl,
+                           write('do you want us to continue? yes or no: '), nl,
+                           get_yes_or_no(Tryagain), nl,
+                           runagain_student(Tryagain)
 
+select_year(first_year, no) :- fail.
 
-
-select_year(second_year) :- write('Have you done any of the following activities'), nl,
+select_year(second_year, yes) :- write('Have you done any of the following activities'), nl,
                             ask_question(Question),nl,
                             get_yes_or_no(Result), nl,
                             get_response(Question, Result), nl.
 
-select_year(final_year) :- write('Have you done any of the following activities'), nl,
+select_year(second_year, no) :- fail.
+
+select_year(final_year, yes) :- write('Have you done any of the following activities'), nl,
                            ask_question(Question),nl,
                            get_yes_or_no(Result), nl,
                            get_response(Question, Result), nl.
 
 
+select_year(final_year, no) :- fail.
 
 
+ask_question_study(first_year) :- write('Are you a first year student?'), nl.
+ask_question_study(second_year) :- write('Are you a second year year student?'), nl.
+ask_question_study(final_year) :- write('Are you a final year student?'), nl.
 
 
 
