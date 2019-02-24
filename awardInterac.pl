@@ -1,9 +1,12 @@
 :- ensure_loaded('getyesno.pl').
 :- ensure_loaded('inference.pl').
+:- ensure_loaded('studentkb.pl').
+:-ensure_loaded('readstr.pl').
+:-ensure_loaded('readnum.pl').
 
 
-startprogram :- reconsult('/Users/gh0stm0de/Desktop/aiCourseWork/studentkb.pl'),
-                write('Welcome to Lancaster Awards'),nl,nl,
+
+startprogram :- write('Welcome to Lancaster Awards'),nl,nl,
                 write('The Lancaster Award rewards you for taking part in those extra-curricular activities outside your academic studies that supplement the excellent education you receive at Lancaster University. Developed in partnership with employers, the certificate rewards you for making the most of your time at Lancaster, and enhances your future job prospects by encouraging you to acquire new skills valued by employers. You will undertake a variety of activities and reflect on the skills you have developed'),nl,nl,
                 write('Are you a Lancaster student? Answer with yes or nope, followed by full stop'),nl,
                 read(Answer),
@@ -78,31 +81,48 @@ runagain_student(_) :- write('sorry, you didnt give me the right answer'), nl,
 
 
 select_year(first_year, yes) :- write('What i will advice is that you start gaining more experience by engaging in extra curricular activities'), nl,
-                          % Goals can be wanting to know about different awards, how to build points, how assessments are made.
+%                          Goals can be wanting to know about different awards, how to build points, how assessments are made.
                            ask_question(Question),nl,
                            get_yes_or_no(Result), nl,
-                           get_response(Question, Result), nl.
-%                           write('do you want us to continue? yes or no: '), nl,
+                           get_response_first(Question, Result), nl.
+%                          write('do you want us to continue? yes or no: '), nl,
 %                           get_yes_or_no(Tryagain), nl,
 %                           runagain_student(Tryagain).
 
-select_year(first_year, no) :- write('').
+select_year(first_year, no) :- fail.
 
 select_year(second_year, yes) :- write('Have you done any of the following activities'), nl,
-                            ask_question_advc(Question),nl,
-                            get_yes_or_no(Result), nl,
-                            get_response(Question, Result), nl.
-
-
-select_year(second_year, no) :- write('').
-
-select_year(final_year, yes) :- write('Have you done any of the following activities'), nl,
                            ask_question_advc(Question),nl,
                            get_yes_or_no(Result), nl,
                            get_response(Question, Result), nl.
 
+select_year(final_year, yes) :- write('Have you done any of the following activities'), nl,
+                           write('1. Had a work experience?'),nl,
+                           get_yes_or_no(Result), nl,
+                           get_response(have_work_experience, Result, Firstscore), nl,
+                           insta(Firstscore),
 
-% select_year(final_year, no) :- write('').
+                           write('2. Engaged in any campus activity?'), nl,
+                           get_yes_or_no(Result1), nl,
+                           get_response(engaged_in_campus_activity, Result1, Secondscore), nl,
+                           insta(Secondscore),
+
+                           write('3. Have done any volunteering?'),nl,
+                           get_yes_or_no(Result2), nl,
+                           get_response(volunteering_work, Result2, Thirdscore), nl,
+                           insta(Thirdscore),
+
+                           write('4. Being to any of our workshops?'), nl,
+                           get_yes_or_no(Result3), nl,
+                           get_response(work_shop_works, Result3, Fouthscore), nl,
+                           insta(Fouthscore),
+
+                           calc_score(Firstscore, Secondscore, Thirdscore, Fouthscore, Output),     % calculate score
+                           calc_award(Output),nl.    % match score to award level
+
+select_year(final_year, no) :- fail.
+
+
 
 
 ask_question_study(first_year) :- write('Are you a first year student?'), nl.
@@ -117,10 +137,10 @@ ask_question(build_points) :- write('2. Do you want to know how to build up poin
 
 ask_question(assessments_made) :- write('3. Do you wish to know how you are assessed?').
 
-ask_question_advc(have_work_experience) :-   write('1. Had a work experience'), nl.
+ask_question_advc(have_work_experience) :-   write('1. Had a work experience?'), nl.
 
-ask_question_advc(engaged_in_campus_activity) :- write('2. Engaged in any campus activity'), nl.
+ask_question_advc(engaged_in_campus_activity) :- write('2. Engaged in any campus activity?'), nl.
 
-ask_question_advc(volunteering_work) :- write('3. Volunteering'), nl.
+ask_question_advc(volunteering_work) :- write('3. Have done any volunteering?'), nl.
 
-ask_question_advc(work_shop_works) :- write('4. Being to any of our workshops'), nl.
+ask_question_advc(work_shop_works) :- write('4. Being to any of our workshops?'), nl.
