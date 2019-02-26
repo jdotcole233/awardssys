@@ -55,7 +55,7 @@ get_response_first(different_types_of_awards, yes) :- nl, nl,
 
 
 
-get_response_first(different_types_of_awards, no) :- fail.
+get_response_first(different_types_of_awards, no) :- write('').
 
 
 get_response_first(build_points, yes) :- write('Building points is essential to getting an award'), nl,
@@ -65,7 +65,7 @@ get_response_first(build_points, yes) :- write('Building points is essential to 
                                     write('Volunteering'), nl,
                                     write('Workshops'), nl.
 
-get_response(build_points, no) :- fail.
+get_response_first(build_points, no) :- fail.
 
 
 
@@ -104,5 +104,68 @@ get_response(volunteering_work, no, _) :- write('Being involved with volunteerin
 get_response(work_shop_works, yes, Score) :- write('You are expected to get a minimum 5 points'),nl,
                                         write("Enter your score:"),nl,
                                         readnumber(Score),nl.
+
 get_response(work_shop_works, no, _) :- write('Being involved with workshop activities helps you earn 5 points'), nl,
                                       write('which can help increase your chances of getting a higher award'), nl.
+
+
+advice_second(work_experience, yes) :-
+                                        write("Great !! You have a wonderful start with the Lancaster award"),nl,
+                                        write("Work experiences, gives you  a 20 point score"), nl,
+                                        write("Which adds up to your overall assessment"), nl.
+
+advice_second(work_experience, no) :- fail.
+
+
+
+second_year_responses(registered_lancaster_award, yes) :-
+                                        write('Do you already have any work experience?'),nl,
+                                        get_yes_or_no(Reply),nl,
+                                        advice_second(work_experience, Reply),nl.
+
+
+second_year_responses(registered_lancaster_award, no) :-
+                                        write("You can register through the student portal"),nl,
+                                        write("You are very welcome to come along to a drop-in and receive feedback on one of your written skills."),nl,
+                                        write("For fairness and parity with other students we cannot tell you what to write but can provide you with feedback"), fail.
+
+
+
+
+assessments_for_students(assessments_for, yes ):-
+                                      write("What happens when i have submitted my skill bank?"),nl,
+                                      write("When we mark your submission you will be assessed on:"),nl,
+                                      write("The structure of your answer"),nl,
+                                      write("The effectiveness of your answer"),nl,
+                                      write("Whether an employer would be impressed with your examples"),nl,
+                                      write("Use of English, spelling and grammar"),nl,
+                                      write("You will be given one opportunity to re-submit your Skills Bank if the first attempt does not meet our requirements."),nl,nl,nl,
+
+
+                                      write("What happens once i have completed my video interview?"),nl,
+                                      write("When we mark your strengths-based submission you will be assessed on:"),nl,
+                                      write("The structure of your answer"),nl,
+                                      write("Your tone"),nl,
+                                      write("Your ability to engage the audience"),nl,
+                                      write("The quality of your examples"),nl,
+                                      write("Clarity of expression"),nl,
+                                      write("Enthusiasm and ability engage the listener"),nl,
+                                      write("Professional demeanour"),nl,
+                                      write("You will be given one opportunity to resubmit if the first attempt does not meet the required standard."),nl,nl, nl,
+
+
+                                      write("Do i need to submit a CV or LinkedIn profile?"),nl,
+                                      write("You will find the CV submission portal on Moodle."),nl,
+                                      write("If you are choosing to submit a LinkedIn profile instead there is section on the Skills Bank application form where you can enter your LinkedIn address."),nl,nl,nl,
+
+
+                                      write("What if i need further guidance?"),nl,
+                                      write("For inspiration, have a look at our Example Skills Bank on Moodle."),nl,
+                                      write("You can use our online query service Ask Careers to get advice."),nl,
+                                      write("We offer Skills Bank support sessions, check with Careers staff for more details."),nl,
+                                      write("Or you can drop into Careers, there will always be someone around who can give you advice on the Lancaster Award."),nl,
+                                      write("The earlier you start completing the Award, the more time you will have to call into Careers with any queries you may have."),nl.
+
+
+
+assessments_for_students(assessments_for, no ):- write('').
