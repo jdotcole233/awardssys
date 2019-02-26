@@ -41,17 +41,56 @@ xkb_identify(3, [explore_careers]) :-
                 \+ parm(post_graduate, m, 2),
                 \+ parm(start_up_ent, m, 3).
 
-xkb_identify(3, [evaluate_preparedness]) :-
+xkb_identify(4, [evaluate_preparedness]) :-
                 parm(start_program, m, 1),
                 parm(computing_career_menu, m, 3),
                 \+ parm(post_graduate, m, 2),
                 \+ parm(start_up_ent, m, 3).
+
+
+
+
+xkb_identify(5, [computing_career]) :-
+                parm(start_program, m, 2),
+                parm(post_graduate_menu, m, 1),
+                prop(completed_degree).
+
+
+xkb_identify(6, [computing_career_no]) :-
+                parm(start_program, m, 2),
+                parm(post_graduate_menu, m, 1),
+                \+ prop(completed_degree).
+
+
+xkb_identify(7, [masters_information_lanc]) :-
+                parm(start_program, m, 2),
+                parm(post_graduate_menu, m, 2).
+
+xkb_identify(8, [masters_course]) :-
+                parm(start_program, m, 2),
+                parm(post_graduate_menu, m, 3).
+
+
+xkb_identify(9, [requirements_postgrduate]) :-
+                parm(start_program, m, 2),
+                parm(post_graduate_menu, m, 4).
+
+
+xkb_identify(10, [start_up_process]) :-
+                parm(start_program, m, 3),
+                prop(start_up_process_ques).
+
 
 xkb_menu(start_program, 'What will you like to know about ?',
 ['Computing career',
 'Postgraduate study',
 'Start-up entrepreneurship'],
 'Start program choice:').
+
+
+
+
+
 
 /*
 xkb_text(examine_your_interest, ['Choosing a career is one of the most important decisions most ',
@@ -71,13 +110,57 @@ xkb_menu(computing_career_menu, 'Adivice on choosing your career path?',
 'Advice on career: ').
 
 
-xkb_question(computing_career, 'Have you completed your computer science degree?',
+xkb_menu(post_graduate_menu, 'Adivice on your postgraduate study?',
+['Have you completed your first degree?',
+'Get information on how to apply to Lancaster University',
+'Get information on Msc courses',
+'What are the requirements for postgraduate'],
+'Postgraduate advice: ').
+
+
+xkb_menu(start_up_menu, 'Advice on starting your own business after graduation',
+['Some tips on starting business']).
+
+
+xkb_question(completed_degree, 'Have you completed your computer science degree?',
  'You have completed your computer science degree',
  'You have not completed your computer science degree').
 
-xkb_text(iwant, ['The career you can get is ']).
-xkb_text(computing_career, ['Computer Engineer ']).
+ xkb_question(start_up_process_ques, 'Do you want to how to start up your own business after graduation?',
+   'You want to know about business start up after graduation',
+   'You dont want to know about business start up after graduation').
 
+xkb_text(iwant, ['The career you can get is ']).
+xkb_text(computing_career, ['You can now apply to universities like: ',
+'University of Portsmouth',
+'Cranfield University',
+'University of Western Australia',
+'Lancaster University UK']).
+
+xkb_text(computing_career_no, ['You should complete you first degree first, ',
+'Then you can think of other post graduate studies.',
+'But i will advice you consider our career paths,',
+'that gives insight on how to plan your career paths including postgrad studies']).
+
+
+xkb_text(masters_information_lanc, ['If you are a current Lancaster student or recent Lancaster graduate and would like to apply for a Masters or other postgraduate taught course, then the amount of information you need to provide as part of your application can be reduced.',
+'Go to the My Applications website and select the option for current students. We will submit an application for you using the information in your student record. If we need any further information we will let you know.']).
+
+xkb_text(masters_course,[
+'Here are some Msc course you can look into',
+'Computer Science Msc',
+'Cyber Secrity Msc',
+'Communication Systems Msc',
+'Computer Science by research Msc'
+]).
+
+
+xkb_text(requirements_postgrduate, [
+'These are the requirements for postgraduate courses in Lancaster UK',
+'Ghana    Bsc          3 years   2:1      or 2:2',
+'Nigeria  Bsc          4 years   3.5/5.0  or 2.5/5.0',
+'Suda     Bsc(Hons)    3 years   2:1      or 2:2'
+]).
 
 xkb_text(examine_your_interest, ['The first step in choosing the right career is to think about your  ',
 'interests. Decide if you prefer analyzing numbers to working ',
@@ -108,3 +191,17 @@ xkb_text(evaluate_preparedness, ['Now that you have focused on a specific career
 'require a two-year or four-year degree. Some fields require certification for your chosen path. For  ',
 'example, if you chose a career in project management, you may find that certain positions require a  ',
 'certification.']).
+
+
+xkb_text(start_up_process, ['Here are some steps for starting your own business',
+'1. Create a business plan',
+'2. Determine your business legal structure',
+'3. Draw a business model',
+'4. Register your bussiness name',
+'5. Enquire about small business taxes',
+'6. Market your business',
+'7. Sell your product',
+'8. Keep record and constant review of your business']).
+
+
+:- write('Type xshell. to start program').
